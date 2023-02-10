@@ -1,0 +1,67 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:set color get_color_from_hex("#ffffff")
+#:set grid_background_color get_color_from_hex("#4467c4")
+#:set text_color get_color_from_hex("#4467c4") 
+
+<Ip_Notes>:
+	name:"Ip_notes"
+	#on_enter:root.add_list_items() if app.isdownloading == False else ""
+	#on_leave:root.clearList() if  app.isdownloading == False else ""
+	MDFloatLayout:
+		size_hint:1,1
+		md_bg_color:get_color_from_hex("#4467c4")
+		MDIconButton:
+			icon:"arrow-left"
+			theme_text_color: 'Custom'
+			ripple_scale:0
+			text_color: get_color_from_hex('#000000')
+			pos_hint:{"center_x":.08,"center_y":.95}
+			on_release:
+				root.manager.goback()
+				root.manager.transition.direction = "right"
+		MDLabel:
+			text:"Ip Notes"
+			theme_text_color:"Custom"
+			text_color:color
+			font_name:"Ubuntu/Ubuntu-Bold"
+			font_size:"24dp"
+			pos_hint:{"center_x":.63,"center_y":.95}	
+		MDLabel:
+			id:progressdownloadlabel
+			text:""
+			adaptive_height:True
+			pos_hint:{"center_x":1.2,"center_y":.95}
+			bold:True
+		MDSpinner:
+			id:progressdownload
+			size_hint: None, None
+			size: dp(30), dp(30)
+			pos_hint:{"center_x":.63,"center_y":.95}
+			palette:[[0.28627450980392155, 0.8431372549019608, 0.596078431372549, 1],[0.3568627450980392, 0.3215686274509804, 0.8666666666666667, 1],[0.8862745098039215, 0.36470588235294116, 0.592156862745098, 1],[0.8784313725490196, 0.9058823529411765, 0.40784313725490196, 1],]
+			active: True if progressdownloadlabel.text != "" else False
+		MDLabel:
+			id:loading
+			halign:"center"
+			pos_hint:{"center_y":.5}
+			font_size:"18dp"
+			color:1,1,1,1
+			font_name:"Ubuntu/Ubuntu-Bold"
+			text:"Loading..." if Mathlist.children == [] else ""	
+		ScrollView:
+			size_hint_y: .9
+			do_scroll_y:True
+			MDGridLayout:
+				cols:1
+				size_hint:1,None
+				pos_hint:{"top":.9}
+				height:self.minimum_height
+				spacing:30
+				padding:20
+				MDList:
+					name:"Ip_notes"
+					id:Mathlist
+					radius:[30]
+					spacing:15
+					md_bg_color:get_color_from_hex("#ffffff")
+											
+		
